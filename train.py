@@ -15,6 +15,7 @@ class Trainer:
 
     def __init__(self, model: nn.Module):
         self._model = model
+        # self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
     def train(
             self,
@@ -34,6 +35,7 @@ class Trainer:
             tik = time.time()
             loss_track.reset()
             for data, target in train_loader:
+                # data, target = data.to(self.device), target.to(self.device)
                 optimizer.zero_grad()
                 output = self._model(data)
 
@@ -42,7 +44,6 @@ class Trainer:
                 optimizer.step()
 
                 loss_track.update(loss.item(), n=data.size(0))
-                print(loss_track.avg)
 
             elapse = time.time() - tik
             print("Epoch: [%d/%d]; Time: %.2f; Loss: %.5f" % (i + 1, epochs, elapse, loss_track.avg))
@@ -90,7 +91,6 @@ class Trainer:
         optimizer = optim.Adam(self._model.parameters(), lr=lr)
         criterion = nn.CrossEntropyLoss()
         loss_track = AverageMeter()
-        device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         self._model.train()
 
         print("Start training...")
@@ -98,7 +98,7 @@ class Trainer:
             tik = time.time()
             loss_track.reset()
             for data, target in train_loader:
-                data, target = data.to(device), target.to(device)
+                # data, target = data.to(self.device), target.to(self.device)
                 optimizer.zero_grad()
                 output = self._model(data)
 

@@ -12,7 +12,7 @@ def parse_args():
     parser.add_argument('--epochs', type=int, default=20, help="training epochs")
     parser.add_argument('--lr', type=float, default=1e-1, help="learning rate")
     parser.add_argument('--bs', type=int, default=64, help="batch size")
-    parser.add_argument('--load', type=bool, default=False, help="load model")
+    parser.add_argument('--load', type=bool, default=True, help="load model")
     args = parser.parse_args()
 
     return args
